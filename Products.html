@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> Product Page</title>
+  <meta charset="utf-8">
+  <script type="text/javascript" src="Products.js"></script>
+  <link href=general.css rel="stylesheet">
+  <link href=ProductGallery.css rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <script src ="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+  <meta charset="utf-8">
+</head>
+<body>
+  <div id="app" class="container-fluid">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+
+            <ul class="navbar-nav text-center mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://s3.us-east-2.amazonaws.com/phase6draft5/Products.html">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://s3.us-east-2.amazonaws.com/phase6draft5/ShoppingCart.html?">Cart</a>
+                </li>
+                <li>
+                  <a class = "nav-link" href="https://s3.us-east-2.amazonaws.com/phase6draft5/ContactUs.html">Contact Us</a>
+                </li>
+
+            </ul>
+            <div class ="mx-auto order-0">
+              <a class="navbar-brand abs" href="https://s3.us-east-2.amazonaws.com/phase6draft5/HomePage.html">Home</a>
+      </div>
+            <ul class="navbar-nav text-center ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Account
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="https://s3.us-east-2.amazonaws.com/phase6draft5/AcctMtn.html">Profile</a>
+                        <a class="dropdown-item" href="https://s3.us-east-2.amazonaws.com/phase6draft5/EditProfile.html">Edit Profile</a>
+                    </div>
+                </li>
+                <li class="nav-item active">
+                    <a id ="logInOut" class="nav-link" href="https://s3.us-east-2.amazonaws.com/phase6draft5/Login.html">Login</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="https://s3.us-east-2.amazonaws.com/phase6draft5/RegisterPage.html">Register</a>
+                </li>
+            </ul>
+    </nav>
+</div>
+<script>
+var containMe = document.createElement("div");
+containMe.setAttribute("class", "containMe");
+document.body.appendChild(containMe);
+for( var i = 0; i<images.length; i++){
+	console.log("image in iteration is " +images[i]);
+  url = "https://s3.us-east-2.amazonaws.com/phase6draft5/"+images[i];
+  urlofDetailPage= "ProductPage.html?" + "img=" +url;
+
+	var box= document.createElement("div");
+	box.setAttribute("class","card");
+
+	var pctImg = document.createElement("img");
+	pctImg.setAttribute("class", "card-img-top");
+	pctImg.setAttribute("src", url);
+  var link = document.createElement("a");
+  link.setAttribute("href", urlofDetailPage);
+  link.appendChild(pctImg);
+	box.appendChild(link);
+
+	var picCap = document.createElement("h5");
+	picCap.setAttribute("class", "card-title");
+	picCap.innerHTML = captions[i];
+
+  var cardPrice = document.createElement("p");
+  cardPrice.setAttribute("class","card-text");
+  cardPrice.innerHTML = "$"+price[i];
+
+  var moreInfo = document.createElement("a");
+  moreInfo.setAttribute("class","btn btn-primary");
+  moreInfo.setAttribute("href",urlofDetailPage);
+  moreInfo.innerHTML = "More Details";
+
+	box.appendChild(picCap);
+  box.appendChild(cardPrice);
+  box.appendChild(moreInfo);
+	containMe.appendChild(box);
+  }
+  $(document).ready(function(){
+    console.log("Current User: "+localStorage.name);
+    checkLoggedIn();
+    LoggedinNav();
+  });
+
+function checkLoggedIn(){
+  if(localStorage.name==""||localStorage.name==null){
+    alert("Not Logged in, Register or Log in first.")
+    window.location.href="https://s3.us-east-2.amazonaws.com/phase6draft5/RegisterPage.html";
+  }
+}
+
+function LoggedinNav(){
+  if(localStorage.name!=""){
+    logInOut.href ="#";
+    logInOut.innerHTML = "Log Out";
+    $("#logInOut").click(function(){
+      LogOut();
+      window.location.href="https://s3.us-east-2.amazonaws.com/phase6draft5/Login.html";
+    });
+  }
+}
+function LogOut(){
+  alert("Logged out, Bye User: "+localStorage.name);
+    localStorage.name ="";
+    localStorage.FName="";
+    localStorage.LName="";
+    localStorage.Email="";
+}
+</script>
+
+</body>
+</html>

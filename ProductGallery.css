@@ -1,0 +1,17 @@
+.containMe {
+  margin-right:auto;
+  margin-left:auto;
+  padding-left:16px;
+  padding-right:16px;
+  width: 79%;
+  position: relative;
+  display: grid;
+  grid-gap: 3px;
+  grid-template-columns: 33% 33% 33%; //for responsitivity
+}
+.container.one {
+  position: relative;
+  display: grid;
+  grid-gap: 3px;
+  grid-template-columns: 33% 33% 33%; //for responsitivity
+}

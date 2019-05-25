@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> Registration Page</title>
+  <meta charset="utf-8">
+  <link href=general.css rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <script src ="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <meta charset="utf-8">
+</head>
+<body>
+  <div id="app" class="container-fluid">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+
+            <ul class="navbar-nav text-center mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://s3.us-east-2.amazonaws.com/phase6draft5/Products.html">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://s3.us-east-2.amazonaws.com/phase6draft5/ShoppingCart.html?">Cart</a>
+                </li>
+                <li>
+                  <a class = "nav-link" href="https://s3.us-east-2.amazonaws.com/phase6draft5/ContactUs.html">Contact Us</a>
+                </li>
+
+            </ul>
+            <div class ="mx-auto order-0">
+              <a class="navbar-brand abs" href="https://s3.us-east-2.amazonaws.com/phase6draft5/HomePage.html">Home</a>
+      </div>
+            <ul class="navbar-nav text-center ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Account
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="https://s3.us-east-2.amazonaws.com/phase6draft5/AcctMtn.html">Profile</a>
+                        <a class="dropdown-item" href="https://s3.us-east-2.amazonaws.com/phase6draft5/EditProfile.html">Edit Profile</a>
+                    </div>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="https://s3.us-east-2.amazonaws.com/phase6draft5/Login.html">Login</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="https://s3.us-east-2.amazonaws.com/phase6draft5/RegisterPage.html">Register</a>
+                </li>
+            </ul>
+    </nav>
+</div>
+<div id="LoginForm">
+  <div class="container">
+    <h1 class="form-heading"> Register Here</h1>
+    <div class="login-form">
+      <div class="main-div">
+          <div class="panel">
+            <h2>Account Registration</h2>
+            <p>Please enter your desired username and password</p>
+              <div>
+                <input type="text" class="form-control" id="createUsername" placeholder="Username">
+              </div>
+          <div>
+                <input type="password" class="form-control" id="createPassword" placeholder="Password">
+              </div>
+              <div>
+                    <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password">
+                  </div>
+                <button id="RegisterButton" class="btn btn-primary" >Register</button>
+                <button id="LoginNav" class = "btn btn-secondary"> Login Page</button>
+                <button id = "CCookie" class = "btn btn-secondary">Clear Cookies</button>
+</div></div></div></div></div>
+
+<script>
+  $(document).ready(function(){
+    localStorage.name="";
+    localStorage.FName="";
+    localStorage.LName="";
+    localStorage.Email="";
+        console.log("Current User: "+localStorage.name);
+    $("#CCookie").click(function(){
+      clearCookie();
+      console.log("Cookie Cleared");
+      console.log("Current Cookie:");
+    });
+    $("#checkCookie").click(function(){
+      checkCookieButton();
+      $("#CheckCookieContent").text(document.cookie);
+
+    });
+    $('#LoginNav').click(function(){
+      window.location.href = "https://s3.us-east-2.amazonaws.com/phase6draft5/Login.html";
+    });
+  })
+  console.log(document.cookie);
+  function setCookie(){
+    var d = new Date();
+    d.setTime(d.getTime() + 30*24*60*60*1000);
+    var expires = "expires="+d.toGMTString();
+    document.cookie =""+"; "+expires;
+  }
+  $("#RegisterButton").click(function(){
+                   // make cookie into array for multiple users?
+                   var username = document.getElementById('createUsername').value;
+    switch (usernameConfirm(username)){
+      case 0: alert("User with that username already exists, please try again.");break;
+      case 1:
+      switch(passwordConfirm(username)){
+            case 0: alert("Password not Confirmed, please try again.");break;
+            case 1:
+             console.log("username is: " + username);
+             var password =document.getElementById('createPassword').value;
+            console.log("password is: "+ password);
+            document.cookie += username +"/";
+            document.cookie += password +"/";
+            console.log("Current Cookie: " +document.cookie);
+            alert("Account created, please log in with your new credentials.");
+            break;
+          };break;
+    }
+    console.log("Current Cookie: " +document.cookie);
+  });
+
+function usernameConfirm(username){
+    var LoginCheckArray =(document.cookie).split("/");
+    console.table(LoginCheckArray);
+    console.log(LoginCheckArray.length);
+    for(i=0,a=0;i<=LoginCheckArray.length;i+=2){
+      console.log(LoginCheckArray[a+i] +":"+ username);
+      if(username == LoginCheckArray[a+i]){
+        var dupe = 0; //user already exists
+        console.log("DUPE=0")
+        return 0;
+      }
+
+}
+  var dupe = 1; // create username valid
+  return 1;
+}
+
+function passwordConfirm(username){
+  var cp1 = document.getElementById('createPassword').value;
+  var cp2 = document.getElementById('confirmPassword').value;
+  if(cp1 ==cp2){
+    console.log("Password confirmed okay");
+    return 1;
+  }else {
+    return 0;
+  }
+}
+
+
+  function clearCookie(){
+    document.cookie = "";
+  }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+.bloc_left_price {
+    color: #a51d13;
+    text-align: center;
+    font-weight: bold;
+    font-size: 150%;
+}
+.add_to_cart_block .price {
+    color: #F44336;
+    text-align: center;
+    font-weight: bold;
+    font-size: 200%;
+    margin-bottom: 0;
+}
+.add_to_cart_block .price_discounted {
+    color: #009688;
+    text-align: center;
+    text-decoration: line-through;
+    font-size: 140%;
+}
+.ProductImg{
+  margin-top:auto;
+  margin-bottom:auto;
+}

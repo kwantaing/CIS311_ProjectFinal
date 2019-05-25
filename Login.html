@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> Login Page</title>
+  <meta charset="utf-8">
+  <link href=general.css rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <script src ="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <meta charset="utf-8">
+</head>
+<body>
+  <div id="app" class="container-fluid">
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+
+          <ul class="navbar-nav text-center mr-auto">
+              <li class="nav-item">
+                  <a class="nav-link" href="https://s3.us-east-2.amazonaws.com/phase6draft5/Products.html">Products</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="https://s3.us-east-2.amazonaws.com/phase6draft5/ShoppingCart.html?">Cart</a>
+              </li>
+              <li>
+                <a class = "nav-link" href="https://s3.us-east-2.amazonaws.com/phase6draft5/ContactUs.html">Contact Us</a>
+              </li>
+
+          </ul>
+          <div class ="mx-auto order-0">
+            <a class="navbar-brand abs" href="https://s3.us-east-2.amazonaws.com/phase6draft5/HomePage.html">Home</a>
+    </div>
+          <ul class="navbar-nav text-center ml-auto">
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Account
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                      <a class="dropdown-item" href="https://s3.us-east-2.amazonaws.com/phase6draft5/AcctMtn.html">Profile</a>
+                      <a class="dropdown-item" href="https://s3.us-east-2.amazonaws.com/phase6draft5/EditProfile.html">Edit Profile</a>
+                  </div>
+              </li>
+              <li class="nav-item active">
+                  <a class="nav-link" href="https://s3.us-east-2.amazonaws.com/phase6draft5/Login.html">Login</a>
+              </li>
+              <li class="nav-item active">
+                  <a class="nav-link" href="https://s3.us-east-2.amazonaws.com/phase6draft5/RegisterPage.html">Register</a>
+              </li>
+          </ul>
+  </nav>
+</div>
+<div id="LoginForm">
+  <div class="container">
+    <h1 class="form-heading"> Login Here</h1>
+    <div class="login-form">
+      <div class="main-div">
+          <div class="panel">
+            <h2>Account Login</h2>
+            <p>Please enter your username and password</p>
+              <div>
+                <input type="text" class="form-control" id="inputUsername" placeholder="Username">
+              </div>
+          <div>
+                <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+              </div>
+                <button id="LoginButton" class="btn btn-primary" >Login</button>
+                <button id="RegNav" class = "btn btn-secondary">Register a new Account</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+  $(document).ready(function(){
+    localStorage.name="";
+    localStorage.FName="";
+    localStorage.LName="";
+    localStorage.Email="";
+    localStorage.cart="";
+    console.log("Current User: "+localStorage.name);
+    $("#CCookie").click(function(){
+      clearCookie();
+      console.log("Cookie Cleared");
+      console.log("Current Cookie:");
+    });
+    $("#checkCookie").click(function(){
+      checkCookieButton();
+      $("#CheckCookieContent").text(document.cookie);
+
+    });
+    $('#RegNav').click(function(){
+      window.location.href = "https://s3.us-east-2.amazonaws.com/phase6draft5/RegisterPage.html";
+    });
+  })
+  console.log(document.cookie);
+  function setCookie(){
+    var d = new Date();
+    d.setTime(d.getTime() + 30*24*60*60*1000);
+    var expires = "expires="+d.toGMTString();
+    document.cookie =""+"; "+expires;
+  }
+  $("#LoginButton").click(function(){
+    var username = document.getElementById('inputUsername').value;
+    console.log("username is: " + username);
+    var password =document.getElementById('inputPassword').value;
+    console.log("password is: "+ password);
+    console.log(document.cookie);
+    checkLogin();
+  });
+
+
+function checkLogin(){
+  var LoginCheckArray =(document.cookie).split("/");
+  console.table(LoginCheckArray);
+  console.log(LoginCheckArray.length);
+  var usrcheck=document.getElementById('inputUsername').value;
+  var passcheck = document.getElementById('inputPassword').value;
+  for(i=0,a=0,b=1;i<=LoginCheckArray.length;i+=2){
+    console.log(LoginCheckArray[a+i] +":"+ usrcheck);
+    console.log(LoginCheckArray[b+i] +":" +passcheck);
+    if(usrcheck == LoginCheckArray[a+i] & passcheck == LoginCheckArray[b+i]){
+      alert("Welcome!");
+      var ok = 1;
+      localStorage.name = usrcheck;
+      window.location.href = "https://s3.us-east-2.amazonaws.com/phase6draft5/HomePage.html";break;}
+    }  if (ok != 1){
+      alert("Incorrect Login, try again.");
+  }}
+
+  function clearCookie(){
+    document.cookie = "";
+  }
+
+</script>
+
+</body>
+</html>

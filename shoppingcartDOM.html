@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> Shopping Cart</title>
+  <meta charset="utf-8">
+    <script type="text/javascript" src="Products.js"></script>
+  <link href=general.css rel="stylesheet">
+  <link href=cart.css rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <script src ="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+  <meta charset="utf-8">
+</head>
+<body>
+  <div id="app" class="container-fluid">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+
+            <ul class="navbar-nav text-center mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://s3.us-east-2.amazonaws.com/phase6draft4/Products.html">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://s3.us-east-2.amazonaws.com/phase6draft4/ShoppingCart.html">Cart</a>
+                </li>
+                <li>
+                  <a class = "nav-link" href="https://s3.us-east-2.amazonaws.com/phase6draft4/ContactUs.html">Contact Us</a>
+                </li>
+
+            </ul>
+            <div class ="mx-auto order-0">
+              <a class="navbar-brand abs" href="https://s3.us-east-2.amazonaws.com/phase6draft4/HomePage.html">Home</a>
+      </div>
+            <ul class="navbar-nav text-center ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Account
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="https://s3.us-east-2.amazonaws.com/phase6draft4/AcctMtn.html">Profile</a>
+                        <a class="dropdown-item" href="https://s3.us-east-2.amazonaws.com/phase6draft4/EditProfile.html">Edit Profile</a>
+                    </div>
+                </li>
+                <li class="nav-item active">
+                    <a id ="logInOut" class="nav-link" href="https://s3.us-east-2.amazonaws.com/phase6draft4/Login.html">Login</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="https://s3.us-east-2.amazonaws.com/phase6draft4/RegisterPage.html">Register</a>
+                </li>
+            </ul>
+    </nav>
+</div>
+<div class="container">
+  <table id="cart" class="table table-hover table-condensed">
+      				<thead>
+  						<tr>
+  							<th style="width:50%">Product</th>
+  							<th style="width:10%">Price</th>
+  							<th style="width:8%">Quantity</th>
+  							<th style="width:22%" class="text-center">Subtotal</th>
+  							<th style="width:10%"></th>
+  						</tr>
+  					</thead>
+  					<tbody id="CartBody">
+
+  					</tbody>
+  					<tfoot>
+  						<tr class="visible-xs">
+  							<td class="text-center"><strong>Total here</strong></td>
+  						</tr>
+  						<tr>
+  							<td><a href="#" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+              	<td><a href="#" id ="clearcart" class="btn btn-warning"><i class="fa fa-angle-left"></i> Empty Cart</a></td>
+  							<td colspan="1" class="hidden-xs"></td>
+  							<td class="hidden-xs text-center"><strong>Total $1.99</strong></td>
+  							<td><a href="#" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
+  						</tr>
+  					</tfoot>
+  				</table>
+</div>
+<script>
+
+  $(document).ready(function(){
+    console.log("Current User: "+localStorage.name);
+    checkLoggedIn();
+    LoggedinNav();
+    splitCartString();
+    $("#clearcart").click(function clearCart(){
+      localStorage.cart="";
+    })
+  });
+
+function splitCartString(){
+  var CartItemArray = (localStorage.cart).split("/");  //separates by product
+  CartItemArray.pop();
+  console.log("Cart Item Array: "+CartItemArray);
+  for(var i =0;i<CartItemArray.length;i++){            //within product, separate by attributes
+    var ItemInfoArray = CartItemArray[i].split("_");
+    var ItemPic=ItemInfoArray[0];
+    var ItemCaption=ItemInfoArray[1];
+    var ItemPrice=ItemInfoArray[3];
+    console.table(ItemInfoArray);
+    Cartgen(ItemPic,ItemCaption,ItemPrice);
+  }
+  console.log("Cart: "+CartItemArray);
+}
+
+
+function Cartgen(ItemPic,ItemCaption,ItemPrice){
+  //convert entire cart container to DOM
+  var CartRow = document.createElement("tr");
+
+  //Product Row
+  var DescCol = document.createElement("td");
+  DescCol.setAttribute("class","ProductCol1");
+
+  var ProductPicDiv = document.createElement("div");
+  ProductPicDiv.setAttribute("class","col-sm-2 hidden-xs");
+
+  var ProductPicinDiv = document.createElement("img");
+  ProductPicinDiv.setAttribute("src",ItemPic);
+  ProductPicDiv.appendChild(ProductPicinDiv);
+
+  var ProductName = document.createElement("h4");
+  ProductName.setAttribute("class","nomargin");
+  ProductName.innerHTML =  ItemCaption;
+  DescCol.appendChild(ProductName);
+  DescCol.appendChild(ProductPicDiv);
+
+  CartRow.appendChild(DescCol);
+
+  //Price
+  var PriceCol = document.createElement("td");
+  PriceCol.setAttribute("class","ProductCol2");
+  PriceCol.innerHTML = "$"+ItemPrice;
+
+  CartRow.appendChild(PriceCol);
+  //Quantity
+
+  var QuantityCol = document.createElement("td");
+  QuantityCol.setAttribute("class","ProductCol3");
+  QuantityCol.innerHTML= "1";
+
+  CartRow.appendChild(QuantityCol);
+
+  //Subtotal
+
+  var SubtotalCol = document.createElement("td");
+  SubtotalCol.setAttribute("class","ProductCol4");
+  SubtotalCol.setAttribute("class","text-center");
+  SubtotalCol.innerHTML ="$"+ItemPrice;
+  CartRow.appendChild(SubtotalCol);
+
+  CartBody.appendChild(CartRow);
+
+}
+
+function checkLoggedIn(){
+  if(localStorage.name==""||localStorage.name==null){
+    alert("Not Logged in, Register or Log in first.")
+    window.location.href="https://s3.us-east-2.amazonaws.com/phase6draft4/RegisterPage.html";
+  }
+}
+
+function LoggedinNav(){
+  if(localStorage.name!=""){
+    logInOut.href ="#";
+    logInOut.innerHTML = "Log Out";
+    $("#logInOut").click(function(){
+      LogOut();
+      window.location.href="https://s3.us-east-2.amazonaws.com/phase6draft4/Login.html";
+    });
+  }
+}
+function LogOut(){
+  alert("Logged out, Bye User: "+localStorage.name);
+    localStorage.name ="";
+    localStorage.FName="";
+    localStorage.LName="";
+    localStorage.Email="";
+}
+</script>
+
+</body>
+</html>
